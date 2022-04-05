@@ -55,8 +55,12 @@ public class StartedServiceActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    // TODO: exercise 9 - implement the onNewIntent callback method
-    // get the message from the extra field of the intent
-    // and display it in the messageTextView
-
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String message = intent.getStringExtra(Constants.MESSAGE);
+        if (message != null) {
+            messageTextView.append("\n".concat(message));
+        }
+    }
 }
