@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import ro.pub.cs.systems.eim.lab05.startedserviceactivity.R;
+import ro.pub.cs.systems.eim.lab05.startedserviceactivity.general.Constants;
 
 public class StartedServiceActivity extends AppCompatActivity {
 
@@ -26,31 +27,31 @@ public class StartedServiceActivity extends AppCompatActivity {
         intent.setComponent(new ComponentName("ro.pub.cs.systems.eim.lab05.startedservice", "ro.pub.cs.systems.eim.lab05.startedservice.service.StartedService"));
         startService(intent);
 
-        // TODO: exercise 8a - create an instance of the StartedServiceBroadcastReceiver broadcast receiver
+        startedServiceBroadcastReceiver = new StartedServiceBroadcastReceiver(messageTextView);
 
-        // TODO: exercise 8b - create an instance of an IntentFilter
-        // with all available actions contained within the broadcast intents sent by the service
-
+        startedServiceIntentFilter = new IntentFilter();
+        startedServiceIntentFilter.addAction(Constants.ACTION_STRING);
+        startedServiceIntentFilter.addAction(Constants.ACTION_INTEGER);
+        startedServiceIntentFilter.addAction(Constants.ACTION_ARRAY_LIST);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        // TODO: exercise 8c - register the broadcast receiver with the corresponding intent filter
+        registerReceiver(startedServiceBroadcastReceiver, startedServiceIntentFilter);
     }
 
     @Override
     protected void onPause() {
-        // TODO: exercise 8c - unregister the broadcast receiver
-
+        unregisterReceiver(startedServiceBroadcastReceiver);
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        // TODO: exercise 8d - stop the service
-
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName("ro.pub.cs.systems.eim.lab05.startedservice", "ro.pub.cs.systems.eim.lab05.startedservice.service.StartedService"));
+        stopService(intent);
         super.onDestroy();
     }
 

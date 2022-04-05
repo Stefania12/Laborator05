@@ -22,8 +22,6 @@ public class StartedServiceBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: exercise 7 - get the action and the extra information from the intent
-        // and set the text on the messageTextView
         String action =  intent.getAction();
         if (action.equals(Constants.ACTION_STRING)) {
             String data = intent.getStringExtra(Constants.DATA);
